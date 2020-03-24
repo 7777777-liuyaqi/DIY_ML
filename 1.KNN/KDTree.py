@@ -278,42 +278,6 @@ class KDTree(object):
         feature=nd.feature
         X0=np.array(list(nd.split[0]))
         return abs(Xi[feature] - X0[feature])
-    
-    def nearest_neighbour_search(self, Xi):
-        """
-        Nearest neighbour search and backtracking.
-        Arguments:
-            Xi {array} -- The normalized data.
-        Returns:
-            node -- The nearest node to Xi.
-        搜索过程：
-        1. 从根节点开始，根据目标在分割特征中是否小于或大于当前节点，向左或向右移动。
-        2. 一旦算法到达叶节点，它就将节点点保存为“当前最佳”。    
-        3. 回溯，即从叶节点返回到根节点
-        4.
-        5. 如果目标与当前节点的父节点所在的将数据集分割为两份的超平面相交，说明当前节点的兄弟节点所在的子树有可能包含更近的点。因此需要对这个兄弟节点递归执行1-4步。
-        """
-        best_dist=float("inf")
-        nd_best = self._search(Xi, self.root) 
-        que=[(self.root,nd_best)]
-        while que:
-            nd_root,cur_node=que.pop(0)
-            # Calculate distance between Xi and root node
-            dist = self._get_eu_dist(Xi, nd_root)
-            # Update best node and distance.
-            if dist < best_dist:
-                best_dist, nd_best = dist, nd_root
-            while cur_node is not nd_root:  
-                cur_dist=self._get_eu_dist(Xi,cur_node)
-                if cur_dist < best_dist:
-                    best_dist = cur_dist
-                    nd_best = cur_node
-                if cur_node.brother and  (
-                    best_dist > self._get_hyper_plane_dist(Xi,cur_node.father))  :
-                    _nd_best = self._search(Xi,cur_node.brother)
-                    que.append((cur_node.brother,_nd_best))
-                cur_node=cur_node.father
-            return nd_best
 
     def k_nearest_neighbor_search(self,Xi,k):
         """
