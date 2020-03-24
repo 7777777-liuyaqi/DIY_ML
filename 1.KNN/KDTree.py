@@ -374,7 +374,7 @@ def main(k):
     start = time.time()
    
     for i in range(num_test):
-        pointlist = classify1.k_nearest_neighbor_search(norm_mat[i].getA()[0],k)
+        pointlist = classify1.k_nearest_neighbor_search(x[i].getA()[0],k)
         result=Counter(list(map(lambda x: x[0][1],pointlist))).most_common()[0][0]
 #         print(pointlist,result)
         error_count += result != labels[i]
