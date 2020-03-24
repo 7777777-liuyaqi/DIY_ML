@@ -1,11 +1,10 @@
-# %load KDTree.py
 #!/usr/bin/env python
 
 import numpy as np
 import os
 import time
 from collections import Counter
-from sklearn import neighbors, datasets
+from sklearn import neighbors
 
 
 
